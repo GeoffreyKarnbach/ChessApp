@@ -1,7 +1,7 @@
 from tkinter import*
 
 lastRect=0
-lastcoords=[]
+lastCoords=[]
 modifiable=True
 
 board=[["*" for lopp in range(8)] for loop in range(8)]
@@ -13,6 +13,8 @@ board[7]=["R2","k2","B2","Q2","K2","B2","k2","R2"]
 figures={"P1":"pawn1.png","k1":"knight1.png","B1":"bishop1.png","R1":"rooks1.png","Q1":"queen1.png","K1":"king1.png",\
         "P2":"pawn2.png","k2":"knight2.png","B2":"bishop2.png","R2":"rooks2.png","Q2":"queen2.png","K2":"king2.png"}
 
+#figures["P1"] -> pawn1.png
+
 '''
 P = pawns
 k = knights
@@ -22,9 +24,16 @@ Q = queen
 K = king
 '''
 
-def confirmCase(event):
-    global lastcoords,modifiable
-    if lastcoords!=[]:
+def array_to_fen(array):
+    pass
+    #"rnbnkqrb/pppppppp/8/8/8/8/PPPPPPPP/RNBNKQRB w KQkq - 0 1"
+
+def get_moves(position):
+    pass
+
+def confirm_case(event):
+    global lastCoords,modifiable
+    if lastCoords!=[]:
         if modifiable:
             modifiable=False
         else:
@@ -34,17 +43,17 @@ def confirmCase(event):
 
 
 def click(event):
-    global lastRect,lastcoords,modifiable
+    global lastRect,lastCoords,modifiable
     if modifiable:
-        if [(event.x//100)*100+2,(event.y//100)*100+2,(event.x//100)*100+98,(event.y//100)*100+98] == lastcoords:
+        if [(event.x//100)*100+2,(event.y//100)*100+2,(event.x//100)*100+98,(event.y//100)*100+98] == lastCoords:
             can.delete(lastRect)
-            lastcoords=[]
+            lastCoords=[]
         else:
             can.delete(lastRect)
             lastRect=can.create_rectangle((event.x//100)*100+2,(event.y//100)*100+2,(event.x//100)*100+98,(event.y//100)*100+98,outline="red",width=4)
-            lastcoords=[(event.x//100)*100+2,(event.y//100)*100+2,(event.x//100)*100+98,(event.y//100)*100+98]
+            lastCoords=[(event.x//100)*100+2,(event.y//100)*100+2,(event.x//100)*100+98,(event.y//100)*100+98]
     else:
-        print((lastcoords[0]-2)//100,(lastcoords[1]-2)//100)
+        print((lastCoords[0]-2)//100,(lastCoords[1]-2)//100)
 
 
 def update_UI(board):
@@ -76,5 +85,5 @@ draw_board()
 update_UI(board)
 
 can.bind("<Button-1>",click)
-fen.bind("<Return>",confirmCase)
+fen.bind("<Return>",confirm_case)
 fen.mainloop()
